@@ -30,9 +30,9 @@ export const Header = () => {
 
 
     return (
-        <div className="flex justify-between items-center h-16 z-100">
+        <div className="flex justify-between items-center h-16 z-100 max-w-[95%] lg:max-w-[85%] mx-auto">
             <div className="flex justify-between items-center">
-                <h1 className="text-3xl font-bold">Triggerly</h1>
+                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold">Triggerly</h1>
             </div>
             <div className="hidden lg:flex gap-8">
                 {menuItems.map((item) => (
@@ -59,7 +59,7 @@ export const Header = () => {
             <motion.nav
                 initial={{ y: "-100%", opacity: 0 }}
                 animate={isOpen ? { y: 0, opacity: 1 } : { y: "-100%", opacity: 0 }}
-                transition={{ duration: 1, ease: "easeInOut" }}
+                transition={{ duration: 0.3, ease: "linear" }}
                 className={`lg:hidden bg-white shadow-md fixed top-[4rem] left-0 w-full z-40 ${isOpen ? "block" : "hidden"}`}
             >
                 <ul className="flex flex-col space-y-4 py-4 px-6">
