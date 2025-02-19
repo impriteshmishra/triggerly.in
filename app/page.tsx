@@ -5,14 +5,11 @@ import { Workflow } from "@/components/workflow";
 
 export default function Home() {
   return (
-    <div className=" "> 
+    <div className=" ">
       <Header />
       <Section />
       <Workflow />
-      <Footer />    
-      
+      <Footer />
     </div>
   );
 }
-
-
