@@ -35,7 +35,7 @@ export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
-  const [showPasword, setShowPassword] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -44,6 +44,12 @@ export const LoginForm = () => {
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
     console.log(values);
+  };
+
+  const handlePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setShowPassword((show) => !show);
   };
 
   return (
@@ -80,14 +86,19 @@ export const LoginForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="******"
-                      {...field}
-                      type={showPasword ? "text" : "password"}
-                      disabled={isPending}
-                    />
-                  </FormControl>
+                  <div className="flex">
+                    <FormControl>
+                      <Input
+                        placeholder="******"
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <Button className=" font-normal" onClick={handlePassword}>
+                      {showPassword ? "Hide" : "Show"}
+                    </Button>
+                  </div>
                   <Button
                     size="sm"
                     variant="link"
