@@ -10,3 +10,7 @@ export const registerSchema = z.object({
   password: z.string().min(6, { message: "Minimum 6 characters required" }),
   name: z.string().min(1, { message: "Name is required" }),
 });
+
+export const newVerificationSchema = z.object({
+  token: z.string().min(1, { message: "Token is required" }),
+}); 
