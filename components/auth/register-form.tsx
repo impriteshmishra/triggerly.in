@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import * as z from "zod";
@@ -24,6 +23,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FormSuccess } from "@/components/form-success";
 import { FormError } from "@/components/form-error";
+import { register } from "@/actions/register";
 
 export const RegisterForm = () => {
   const searchParams = useSearchParams();
@@ -35,7 +35,7 @@ export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
-  const [showPassword, setShowPassoword] = useState<boolean>(true);
+  const [showPassword, setShowPassword] = useState<boolean>(true);
 
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -43,7 +43,18 @@ export const RegisterForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof registerSchema>) => {
-    console.log(values);
+    startTransition(() => {
+      register(values).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
+      });
+    });
+  };
+
+  const handlePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setShowPassword((show) => !show);
   };
 
   return (
@@ -61,7 +72,7 @@ export const RegisterForm = () => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
                     <Input
                       placeholder="John doe"
@@ -98,14 +109,19 @@ export const RegisterForm = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="******"
-                      {...field}
-                      type={showPassword ? "text" : "password"}
-                      disabled={isPending}
-                    />
-                  </FormControl>
+                  <div className="flex">
+                    <FormControl>
+                      <Input
+                        placeholder="******"
+                        {...field}
+                        type={showPassword ? "text" : "password"}
+                        disabled={isPending}
+                      />
+                    </FormControl>
+                    <Button className=" font-normal" onClick={handlePassword}>
+                      {showPassword ? "Hide" : "Show"}
+                    </Button>
+                  </div>
                   <Button
                     size="sm"
                     variant="link"
