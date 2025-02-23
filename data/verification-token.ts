@@ -13,14 +13,14 @@ export const getVerificationTokenByEmail = async (email: string) => {
   }
 };
 
-export const getVerificationTokenById = async (id: string) => {
+export const getVerificationTokenByToken = async (token: string) => {
   try {
-    const token = await db.verificationToken.findUnique({
+    const existingToken = await db.verificationToken.findUnique({
       where: {
-        id,
+        token,
       },
     });
-    return token;
+    return existingToken;
   } catch {
     return null;
   }
