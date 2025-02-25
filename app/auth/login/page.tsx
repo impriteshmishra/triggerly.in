@@ -1,3 +1,4 @@
+export const dynamic = "force-static";
 import { LoginForm } from "@/components/auth/login-form";
 
 export default function Login() {
