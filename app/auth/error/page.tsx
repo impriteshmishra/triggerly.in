@@ -1,3 +1,7 @@
-export default function Error() {
-  return <div>Error</div>;
-}
+import { ErrorCard } from "@/components/auth/error-card";
+
+const AuthErrorPage = () => {
+  return <ErrorCard />;
+};
+
+export default AuthErrorPage;

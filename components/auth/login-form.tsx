@@ -10,6 +10,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { login } from "@/actions/login";
 
 import { CardWrapper } from "./card-wrapper";
 
@@ -43,7 +44,21 @@ export const LoginForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    console.log(values);
+    startTransition(() => {
+      login(values)
+        .then((data) => {
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          } else {
+            form.reset();
+            setSuccess(data?.success);
+          }
+        })
+        .catch(() => {
+          setError("Something went wrong!");
+        });
+    });
   };
 
   const handlePassword = (e: React.MouseEvent<HTMLButtonElement>) => {
